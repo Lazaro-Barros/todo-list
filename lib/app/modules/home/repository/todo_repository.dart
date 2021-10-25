@@ -6,10 +6,18 @@ class TodoRepository{
 
   TodoRepository(this.firestore);
 
+  List<Todo> getTodosFromQuery(QuerySnapshot snapshot) {
+  return snapshot.docs.map((DocumentSnapshot doc) {
+    return Todo.fromSnapshot(doc);
+  }).toList();
+}
+
+
   Stream<List<Todo>> getTodos(){
     return firestore.collection('todo').snapshots().map((query){
-      return query.docs.map((doc){
-        return Todo(documentReference: doc.reference,done: doc['done'],date: doc['date'],description: doc['description']);
+      return query.docs.map((DocumentSnapshot doc) {
+        print(doc['description']);
+        return Todo.fromSnapshot(doc);
       }).toList();
     });
   }

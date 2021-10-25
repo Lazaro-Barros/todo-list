@@ -8,7 +8,7 @@ import 'home_page.dart';
 class HomeModule extends Module {
   @override
   final List<Bind> binds = [
- Bind.lazySingleton((i) => HomeStore(i.get())),
+ Bind.lazySingleton((i) => HomeStore(i.get<TodoRepository>())),
  Bind.lazySingleton<TodoRepository>((i) => TodoRepository(FirebaseFirestore.instance)),
  ];
 

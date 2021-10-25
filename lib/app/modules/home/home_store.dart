@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:todolist/app/modules/home/models/todo_model.dart';
 import 'package:todolist/app/modules/home/repository/todo_repository.dart';
 
 part 'home_store.g.dart';
@@ -9,5 +10,21 @@ abstract class HomeStoreBase with Store {
   
   final TodoRepository todoRepo;
 
-  HomeStoreBase(this.todoRepo);
+  @observable
+  ObservableStream<List<Todo>>? todoList;
+
+
+  @observable 
+  bool isLoading= true;
+
+
+  HomeStoreBase(this.todoRepo){
+    getTodoList();
+  }
+
+  @action
+  getTodoList(){
+    todoList = todoRepo.getTodos().asObservable();
+    isLoading= false;
+  }
 }

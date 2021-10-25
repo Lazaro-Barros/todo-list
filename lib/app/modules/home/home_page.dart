@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:todolist/app/modules/home/models/todo_model.dart';
+import 'components/todo_tile_widget.dart';
 import 'home_store.dart';
+
 class HomePage extends StatefulWidget {
   final String title;
   const HomePage({Key? key, this.title = "Home"}) : super(key: key);
@@ -13,7 +17,33 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    appBar: AppBar(title: Text('Home'),),
-    );
+      backgroundColor: Colors.grey[300],
+        appBar: AppBar(
+          title: Text('Home'),
+        ),
+        body: Observer(
+          builder: (_) {
+            if (controller.todoList!.data == null) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (controller.todoList!.hasError) {
+              print("Occoreu um erro" + controller.todoList!.error.toString());
+              return Center(
+                  child:
+                      Text("Occoreu um erro" + controller.todoList!.toString()));
+            } else{
+              List<Todo> list = controller.todoList!.data;
+            return ListView.builder(
+                itemCount: list.length,
+                itemBuilder: (_, index) {
+                  return TodoTile(todo: list[index]);
+                });
+            }
+            
+          },
+        ), floatingActionButton: FloatingActionButton(onPressed: (){},child: Icon(Icons.add)),
+        );
   }
 }
