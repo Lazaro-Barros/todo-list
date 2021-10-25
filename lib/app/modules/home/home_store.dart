@@ -1,14 +1,13 @@
 import 'package:mobx/mobx.dart';
+import 'package:todolist/app/modules/home/repository/todo_repository.dart';
 
 part 'home_store.g.dart';
 
 class HomeStore = HomeStoreBase with _$HomeStore;
 
 abstract class HomeStoreBase with Store {
-  @observable
-  int counter = 0;
+  
+  final TodoRepository todoRepo;
 
-  Future<void> increment() async {
-    counter = counter + 1;
-  }
+  HomeStoreBase(this.todoRepo);
 }

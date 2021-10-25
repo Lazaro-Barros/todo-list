@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:todolist/app/modules/home/repository/todo_repository.dart';
 import '../home/home_store.dart'; 
 
 import 'home_page.dart';
@@ -6,7 +8,8 @@ import 'home_page.dart';
 class HomeModule extends Module {
   @override
   final List<Bind> binds = [
- Bind.lazySingleton((i) => HomeStore()),
+ Bind.lazySingleton((i) => HomeStore(i.get())),
+ Bind.lazySingleton<TodoRepository>((i) => TodoRepository(FirebaseFirestore.instance)),
  ];
 
  @override
