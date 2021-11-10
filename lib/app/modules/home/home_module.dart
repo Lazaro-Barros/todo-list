@@ -16,6 +16,6 @@ class HomeModule extends Module {
  @override
  final List<ModularRoute> routes = [
    ChildRoute(Modular.initialRoute, child: (_, args) => HomePage()),
-   ChildRoute("/cadastro", child: (_, args) => CreateUpdatePage()),
+   ChildRoute("/cadastro", child: (_, args) => CreateUpdatePage(todo: args.data,)),
  ];
 }

@@ -4,7 +4,7 @@ class Todo {
   String? description;
   bool? done;
   Timestamp? date;
-  final DocumentReference? documentReference;
+  DocumentReference? documentReference;
 
   
 

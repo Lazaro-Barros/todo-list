@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:todolist/app/modules/home/home_store.dart';
 import 'package:todolist/app/modules/home/models/todo_model.dart';
 
 class TodoTile extends StatefulWidget {
   TodoTile({ Key? key, required this.todo }) : super(key: key);
-  Todo todo;
+  final Todo todo;
 
   @override
   _TodoTileState createState() => _TodoTileState();
 }
 
-class _TodoTileState extends State<TodoTile> {
+class _TodoTileState extends ModularState<TodoTile,HomeStore> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,6 +24,9 @@ class _TodoTileState extends State<TodoTile> {
           widget.todo.done=check;
           widget.todo.update();
         },),
+        trailing: IconButton(onPressed: (){
+           Modular.to.pushNamed("/cadastro",arguments: widget.todo);
+        }, icon: Icon(Icons.edit)),
       ),
     );
   }
