@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:todolist/app/modules/home/models/todo_model.dart';
-import 'components/todo_tile_widget.dart';
-import 'home_store.dart';
+import '../components/todo_tile_widget.dart';
+import '../home_store.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -43,7 +43,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
             }
             
           },
-        ), floatingActionButton: FloatingActionButton(onPressed: (){},child: Icon(Icons.add)),
+        ), floatingActionButton: FloatingActionButton(onPressed: (){
+          Modular.to.pushNamed("/cadastro");
+        },child: Icon(Icons.add)),
         );
   }
 }

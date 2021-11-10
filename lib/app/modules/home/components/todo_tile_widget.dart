@@ -17,9 +17,7 @@ class _TodoTileState extends State<TodoTile> {
       padding: EdgeInsets.all(8),
       margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
       child: ListTile(
-        
         title: Text(widget.todo.description!),
-        subtitle: Text(widget.todo.date.toString()),
         leading: Checkbox(value: widget.todo.done,onChanged: (check){
           widget.todo.done=check;
           widget.todo.update();
