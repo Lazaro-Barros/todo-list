@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:todolist/app/modules/home/home_store.dart';
 import 'package:todolist/app/modules/home/models/todo_model.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 class CreateUpdatePage extends StatefulWidget {
   const CreateUpdatePage({Key? key, this.todo}) : super(key: key);
@@ -13,28 +12,35 @@ class CreateUpdatePage extends StatefulWidget {
 }
 
 class _CreateUpdatePageState extends ModularState<CreateUpdatePage, HomeStore> {
-  var descriptionControlles = new TextEditingController();
+  var descriptionController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     if (widget.todo != null) {
-      descriptionControlles.text = widget.todo!.description!;
+      descriptionController.text = widget.todo!.description!;
     }
     return Scaffold(
       appBar: AppBar(
         title: widget.todo == null
             ? Text("Cadastro de TODO")
             : Text("Edição de TODO"),
-        actions: widget.todo != null ? [IconButton(onPressed: () async {
-          await controller.deleteTodo(widget.todo!);
-           Navigator.pop(context);
-        }, icon: Icon(Icons.delete),)] : [],
+        actions: widget.todo != null
+            ? [
+                IconButton(
+                  onPressed: () async {
+                    await controller.deleteTodo(widget.todo!);
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.delete),
+                )
+              ]
+            : [],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
             TextField(
-              controller: descriptionControlles,
+              controller: descriptionController,
               decoration: InputDecoration(labelText: "Descrição TODO"),
             ),
           ],
@@ -44,9 +50,9 @@ class _CreateUpdatePageState extends ModularState<CreateUpdatePage, HomeStore> {
           onPressed: () async {
             if (widget.todo == null) {
               await controller
-                  .addTodo(Todo(description: descriptionControlles.text));
+                  .addTodo(Todo(description: descriptionController.text));
             } else {
-              widget.todo!.description = descriptionControlles.text;
+              widget.todo!.description = descriptionController.text;
               await controller.updateTodo(widget.todo!);
             }
 
